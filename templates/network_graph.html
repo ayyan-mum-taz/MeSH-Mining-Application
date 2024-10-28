@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Network Graph</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="network_graph.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@200&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Image in the top-right corner -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Boehringer_Ingelheim_Logo_RGB_Accent_Green.svg/2560px-Boehringer_Ingelheim_Logo_RGB_Accent_Green.svg.png" alt="Logo" style="position: absolute; top: 10px; right: 10px; width: 100px;">
+
+    <!-- Explanatory Text in the top-left corner -->
+    <div style="position: absolute; top: 10px; left: 10px; width: 200px; background-color: white; padding: 10px; border-radius: 5px;">
+        <p>The central node is your search. Hover over the nodes to see their names. The thicker the edge, the lower the pVal. The closer the node, the higher the enrichment.</p>
+    </div>
+
+    <div id="network-graph-container"></div>
+    <script>
+        const data = {{ graph_data|safe }};
+
+        // Function to normalize thickness values for graph appearance
+        function normalizeThickness(thickness, minThickness = 1, maxThickness = 10) {
+            const minOriginal = 10;
+            const maxOriginal = 100; 
+
+            return minThickness + ((thickness - minOriginal) / (maxOriginal - minOriginal)) * (maxThickness - minThickness);
+        }
+
+        // Function to normalize distance values for graph appearance
+        function normalizeDistance(distance, minDistance = 0, maxDistance = 200) {
+            const minOriginal = 10; 
+            const maxOriginal = 100;
+
+            return minDistance + ((distance - minOriginal) / (maxOriginal - minOriginal)) * (maxDistance - minDistance);
+        }
+
+        // Function to render the network graph
+        function renderNetworkGraph(data) {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const svg = d3.select("#network-graph-container").append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+            const simulation = d3.forceSimulation(data.nodes)
+                .force("link", d3.forceLink(data.edges).id(d => d.id).distance(d => normalizeDistance(d.distance)))
+                .force("charge", d3.forceManyBody().strength(-300))
+                .force("center", d3.forceCenter(width / 2, height / 2));
+
+            const link = svg.append("g")
+                .selectAll("line")
+                .data(data.edges)
+                .join("line")
+                .attr("stroke-width", d => normalizeThickness(d.thickness)) 
+                .attr("stroke", "#999");
+
+            const node = svg.append("g")
+                .selectAll("circle")
+                .data(data.nodes)
+                .join("circle")
+                .attr("r", d => d.size)
+                .attr("fill", "#69b3a2");
+
+            node.append("title")
+                .text(d => d.label);
+
+            simulation.on("tick", () => {
+                link
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+
+                node
+                    .attr("cx", d => d.x)
+                    .attr("cy", d => d.y);
+            });
+        }
+
+        // Calling the render function with the provided data
+        renderNetworkGraph(data);
+    </script>
+</body>
+</html>

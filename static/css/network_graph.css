@@ -1,0 +1,22 @@
+/* network_graph.css */
+
+/* Logo styling */
+#logo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 100px;
+}
+
+/* Explanation box styling */
+#explanation {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 250px;
+    background-color: #07312A;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Antonio', sans-serif;
+}

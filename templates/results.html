@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- For header -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@200&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" type="text/css" href="../static/css/styleResults.css">
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <title>MeSH Mining</title>
+
+</head>
+<body onload="setLoader()">
+    <header>
+        <!-- header for results page, clicking on it returns to home page -->
+        <div class="header">
+            <h1 onclick="returnHome()">MeSH Mining</h1>
+        </div>
+    </header>
+
+    <div id="loader"></div>
+
+    <h1>Search Results</h1>
+
+    <!-- sort result buttons -->
+    <div class="sort-by-group">
+        <p id="sort-buttons">Sort By: 
+            <button id="gene-sort" onclick="sortByValue('GeneID')" disabled="true">Gene ID</button>
+            <button id="mesh-sort" onclick="sortByValue('MeSH')" disabled="true">MeSH</button>
+            <button id="pValue-sort" onclick="sortByValue('p_Value')" disabled="true">pVal</button>
+            <button id="enrich-sort" onclick="sortByValue('Enrich')" disabled="true">Enrichment</button>
+            <button id="num-gene-sort" onclick="sortByValue('numGenes')" disabled="true">Number of Genes</button>
+            <button id="view-network-graph" class="view-network-button" onclick="viewNetworkGraph()" disabled="true">View Network Graph</button>
+        </p>
+    </div>
+
+    <!-- number of results per page buttons -->
+    <div class="results-per-page">
+        <p>Results Per Page: 
+            <button onclick="changeNumResults(20)">20</button>
+            <button onclick="changeNumResults(40)">40</button>
+            <button onclick="changeNumResults(80)">80</button>
+        </p>
+    </div>
+
+    <div style="display: none;" id="tableResultsDiv">
+
+        <table id="resultsTable">
+            <thead>
+                <!-- Add table columns here -->
+            </thead>
+            <tbody>
+                <!-- Add your data rows here -->
+            </tbody>
+        </table>
+    </div>
+    
+    <div  style="display: none;" id="pagination">
+        <button id="prevPage" onclick="setLoader()">Previous</button>
+        <span id="currentPage">1</span>
+        <button id="nextPage" onclick="setLoader()">Next</button>    
+    </div>
+
+    <div id="network-graph-container" style="display: none;"></div>
+
+    <script src="../static/javascript/results.js"></script>
+    <script>
+        // return to home page
+        function returnHome(){
+            window.location.href = "{{ url_for('index') }}"
+        }
+
+        function viewNetworkGraph() {
+            const params = new URLSearchParams(window.location.search);
+            const geneId = params.get('geneID');
+            const meshTerm = params.get('meshTerm');
+
+            if (geneId) {
+                // window.location.href = `/networkGraphPage?geneID=${geneId}`;
+                window.open(`{{ url_for('network_graph_page') }}?geneID=${geneId}`, '_blank')
+            } else if (meshTerm) {
+                // window.location.href = `/networkGraphPage?meshTerm=${meshTerm}`;
+                window.open(`{{ url_for('network_graph_page') }}?meshTerm=${meshTerm}`, '_blank')
+            } else {
+                alert("No valid search type found.");
+            }
+    }
+    </script>
+    
+</body>
+
+<footer>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Boehringer_Ingelheim_Logo_RGB_Accent_Green.svg/2560px-Boehringer_Ingelheim_Logo_RGB_Accent_Green.svg.png" alt="Fixed Image" class="fixed-image">
+</footer>
+</html>
+

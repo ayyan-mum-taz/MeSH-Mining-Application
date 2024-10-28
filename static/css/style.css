@@ -1,0 +1,198 @@
+body /* eliminate white border and change background */
+{
+    margin: 0;
+    padding: 0;
+    background-color: #dbdbdb;
+}
+.header /* MeSH Header*/
+{
+
+    font-family: 'Antonio', sans-serif;
+    background-color: #07312A;
+    color: #dbdbdb;
+    padding: 30px 0;
+    text-align: center;
+    font-size: 55px;
+    
+    text-decoration-line: underline;
+    text-decoration-color: #04e57d;
+    text-decoration-skip-ink: none; 
+    text-underline-offset: 20px; 
+    max-height: 100px; 
+}
+
+.header h1 /* Edit placement of header text */
+{
+    margin-top: -40px; 
+}
+
+.fixed-image /* Logo settings */
+{
+    position: fixed;
+    bottom: 10px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    width: 140px; 
+    height: auto; 
+}
+
+.container /* button placement */
+{
+    display: flex;
+    justify-content: center;
+    
+}
+
+.container button /* button placement */
+{
+    margin: 20px;
+    text-align: center; 
+}
+
+.box /* button background placement */
+{
+    width: 500px; 
+    height: auto;
+    margin: 0 auto; 
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(202, 204, 209); 
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.8); 
+}
+
+
+.rounded-button /* button style conventions */
+{
+    font-family: 'Arial', sans-serif;
+    font-weight: bolder;
+    width: 100px; 
+    height: 50px; 
+    background-color: #07312A;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.6); 
+    color: #04e57d;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-bottom: 10px; 
+    margin-left: 300px;
+    display: block; 
+    transition: background-color .25s, color .25s;
+}
+.rounded-button:hover{
+    background-color: #04e57d;
+    color:#07312A
+}
+.rounded-button:active{
+    background-color: #000000;
+    color:white;
+}
+
+.search-button
+{
+    font-family: 'Arial', sans-serif;
+    font-weight: bolder;
+    width: 100px; 
+    height: 30px; 
+    background-color: white;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.6); 
+    color: #07312A;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    display: flexbox; 
+}
+
+.hidden-text {
+    display: none;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/*Start of Dropdown Content*/
+
+.dropdown-content /* USE CASE 1 options */
+{
+    display: none;
+    margin-top: 115px;
+    position: absolute;
+    background-color: #07312A;
+    min-width: 200px;
+    max-height: fit-content;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 10px;
+    align-items: center;
+}
+
+.dropdown-content a /* style */
+{
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: aliceblue;
+}
+
+
+.text searchInput{
+    margin-top: 10px;
+}
+
+.dropdown-content a:hover {
+    background-color: #000000;
+}
+
+.scrollable-content 
+{
+    max-height: 250px; 
+    overflow-y: scroll;
+}
+
+.dropdown input 
+{
+    min-width: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+#searchInput{
+    padding: 5px;
+    margin: 10px;
+}
+
+#meshInput{
+    padding: 5px;
+    margin: 10px;
+}
+
+#multiGeneInput{
+    padding: 5px;
+    margin: 10px;
+}
+
+.selection-dropdown{
+    margin: 10px;
+}
+
+/*End of Dropdown Content*/
+
+.search-container 
+{
+    width: 300px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.search-container p 
+{
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bolder;
+    margin: 0;
+}

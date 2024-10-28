@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@200&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" type="text/CSS" href="../static/css/style.css">
+
+<title>MeSH Mining</title>
+</head>
+<body>
+    <header>
+        <div class="header">
+            <h1>MeSH Mining</h1>
+        </div>
+    </header>
+
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Boehringer_Ingelheim_Logo_RGB_Accent_Green.svg/2560px-Boehringer_Ingelheim_Logo_RGB_Accent_Green.svg.png" alt="Fixed Image" class="fixed-image">
+    <div class="search-container" id="searchContainer">
+        <p> Select an option from below. </p>
+    </div>
+    <div class="box">
+        
+    <div class="container">
+        <!-- Search by Gene-ID -->
+        <button class="rounded-button" id="geneIDbutton" onclick="(function() { toggleDropdown('dropdown1');  })()">Search by Gene-ID</button>
+        <div id="dropdown1" class="dropdown-content">
+            <input type="text" id="searchInput" placeholder="Enter Gene ID"/>
+            <select id="geneSelections" onchange="copyGeneToInput()" class="selection-dropdown">
+                {% for ID in geneIDs %}
+                    <option value="{{ID}}">{{ ID }}</option>
+                {% endfor %}
+            </select>
+            <button id="searchButton" class="search-button" onclick="searchByGeneID()">Search</button>
+        </div>
+
+        <!-- Search by MeSH -->
+        <button class="rounded-button" id="meshButton" onclick="(function() { toggleDropdown('dropdown2'); })()">Search by MeSH</button>
+        <div id="dropdown2" class="dropdown-content">
+            <input type="text" id="meshInput" placeholder="Enter MeSH Term"/>
+            <select id="meshSelections" onchange="copyMeshToInput()" class="selection-dropdown">
+                {% for mesh in meshTerms %}
+                    <option value="{{mesh}}">{{ mesh }}</option>
+                {% endfor %}
+            </select>
+            <button id="meshSearchButton" class="search-button" onclick="searchyByMesh()">Search</button>
+        </div>
+
+        <!-- Search by Multiple Genes -->
+        <button class="rounded-button" id="multipleIDbutton" onclick="(function() { toggleDropdown('dropdown3'); })()">Search by Multiple</button>
+        <div id="dropdown3" class="dropdown-content">
+            <input type="text" id="multiGeneInput" placeholder="Enter Gene IDs"/>
+            <select id="multipleGeneSelections" onchange="copyMultipleGenesToInput()" class="selection-dropdown">
+                {% for ID in geneIDs %}
+                    <option value="{{ID}}">{{ ID }}</option>
+                {% endfor %}
+            </select>
+            <button id="multiGeneSearchButton" class="search-button" onclick="searchyByMultGeneID()">Search</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../static/javascript/index.js"></script>
+
+    <script>
+        // Goes to results page for a single gene ID
+        function searchByGeneID() {
+            var geneId = document.getElementById('searchInput').value;
+            if (geneId != "") {
+                window.location.href = "{{ url_for('results') }}" + "?geneID=" + encodeURIComponent(geneId);   
+            } else {
+                alert("Please enter a Gene ID");
+            }          
+        }
+
+        // Goes to results page for a MeSH term
+        function searchyByMesh() {
+            var meshTerm = document.getElementById('meshInput').value;
+            if (meshTerm != "")
+            {
+                window.location.href = "{{ url_for('results') }}" + "?meshTerm=" + encodeURIComponent(meshTerm);
+            } else {
+                alert("Please enter a MeSH Term");
+            }            
+        }
+
+        // Goes to results page for multiple gene IDs
+        function searchyByMultGeneID() {
+            var geneIds = document.getElementById('multiGeneInput').value;
+            if (geneIds != "")
+            {
+                window.location.href = "{{ url_for('results') }}" + "?geneIDs=" + encodeURIComponent(geneIds);
+            } else {
+                alert("Please enter 1 or more Gene IDs");
+            }            
+        }
+    </script>
+
+</body>
+</html>
+
